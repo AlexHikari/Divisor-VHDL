@@ -154,11 +154,11 @@ begin
     elsif rising_edge(clk) then
       -- Completar
 		if coc_ld = '1' then
-			coc_r <= coc_r & '0';
-		elsif coc_sh = '0' then
-			coc_r <= coc_r(7 downto 1) & '0';
-		elsif coc_sh = '1' then
-			coc_r <= coc_r(7 downto 1) & '1';
+			coc_r <= (others => '0');
+		elsif coc_sh = '0' and dndo_msb = '1' then
+			coc_r <= coc_r(6 downto 0) & '0';
+		elsif coc_sh = '1' and dndo_msb = '0' then
+			coc_r <= coc_r(6 downto 0) & '1';
 		end if;
     end if;
   end process p_coc_r;
@@ -176,10 +176,8 @@ begin
       -- Completar
 		if cntr_ld = '1' then
 			cntr <= shift;
-		elsif cntr_ld = '0' then
-			if cntr_cu = '1' then
+		elsif cntr_cu = '1' then
 				cntr <= cntr - 1;
-			end if;
 		end if;
     end if;
   end process p_cntr;

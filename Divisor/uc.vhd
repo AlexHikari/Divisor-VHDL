@@ -60,7 +60,7 @@ begin
 			next_state <= s2;
       when s2 =>
       -- Completar        
-			next_sate <= s3;
+			next_state <= s3;
       when s3 =>
         if msb = '1' then
           next_state <= s4;
@@ -75,10 +75,10 @@ begin
 			next_state <= s6;
       when s6 =>
       -- Completar
-			if zero = '0' then
+			if zero = '1' then
 				next_state <= s0;
 			else
-				nrxt_state <= s2;
+				next_state <= s2;
 			end if;
       when others => null;
     end case;
@@ -120,46 +120,29 @@ begin
         fin <= '0';
       when s2 =>
       -- Completar
-			------------------------------------------------
-			-- Se hace Or logica de ¬add_sub,c_cntr_d1_ld,c_mux
-			-- c_dndo_ld 
-			------------------------------------------------
 			ctrl <= c_cntr_d1_ld or
 					  c_mux or
 					  c_dndo_ld;
-			
+			fin <= '0';
       when s3 =>
       -- Completar
-			------------------------------------------------
-			-- Se hace Or logica de c_cntr_cu
-			-- 
-			------------------------------------------------
 			ctrl <= c_cntr_cu;
-		
+		   fin <= '0';
       when s4 =>
       -- Completar
-			------------------------------------------------
-			-- Se hace Or logica de c_coc_sh,add_sub
-			-- c_dndo_ld
-			------------------------------------------------
 			ctrl <=  c_coc_sh or
-						add_sub or
+						c_add_sub or
+						c_mux or
 						c_dndo_ld;
+			fin <= '0';
       when s5 =>
       -- Completar
-			------------------------------------------------
-			-- Se hace Or logica de add_sub, c_dndo_ld
-			-- 
-			------------------------------------------------
-			ctrl <= 	add_sub or
-						c_dndo_ld;
+			ctrl <= c_coc_sh;
+			fin <= '0';
       when s6 =>
       -- Completar
-			------------------------------------------------
-			-- Se hace Or logica de c_dsor_sh
-			-- 
-			------------------------------------------------
 			ctrl <= 	c_dsor_sh;
+			fin <= '0';
 			
       when others => null;
     end case;
