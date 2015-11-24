@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <report-views version="2.0" >
  <header>
-  <DateModified>2015-11-23T22:02:28</DateModified>
+  <DateModified>2015-11-24T17:44:06</DateModified>
   <ModuleName>divider</ModuleName>
-  <SummaryTimeStamp>Unknown</SummaryTimeStamp>
-  <SavedFilePath>C:/Users/Alex/Documents/GitHub/Divisor-VHDL/DivisorGenerico/iseconfig/divider.xreport</SavedFilePath>
-  <ImplementationReportsDirectory>C:/Users/Alex/Documents/GitHub/Divisor-VHDL/DivisorGenerico</ImplementationReportsDirectory>
+  <SummaryTimeStamp>2015-11-24T17:14:06</SummaryTimeStamp>
+  <SavedFilePath>E:/Divisor-VHDL-master/DivisorGenerico/iseconfig/divider.xreport</SavedFilePath>
+  <ImplementationReportsDirectory>E:/Divisor-VHDL-master/DivisorGenerico\</ImplementationReportsDirectory>
   <DateInitialized>2015-11-23T22:02:28</DateInitialized>
   <EnableMessageFiltering>false</EnableMessageFiltering>
  </header>

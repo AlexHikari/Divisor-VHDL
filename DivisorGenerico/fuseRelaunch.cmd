@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -o "E:/Divisor-VHDL-master/DivisorGenerico/tb_divider_isim_beh.exe" -prj "E:/Divisor-VHDL-master/DivisorGenerico/tb_divider_beh.prj" "work.tb_divider" 

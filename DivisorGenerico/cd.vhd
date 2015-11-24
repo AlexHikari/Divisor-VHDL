@@ -19,21 +19,20 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity cd is
-  generic(n: integer := 6; m: integer := 3);
+  generic(n: integer := 6);
   port (
     clk    : in  std_logic;                      -- clock
     rst_n  : in  std_logic;                      -- reset
-    dsor   : in  std_logic_vector(m-1 downto 0);   -- Divisor
+    dsor   : in  std_logic_vector(n-1 downto 0);   -- Divisor
     dndo   : in  std_logic_vector(n-1 downto 0);   -- Dividendo
     coc    : out std_logic_vector(n-1 downto 0);   -- Cociente
     res    : out std_logic_vector(n-1 downto 0);   -- Resto
     ctrl   : in  std_logic_vector(10 downto 0);   -- Control
-    status : out std_logic_vector(1 downto 0));  -- Status
+    status : out std_logic_vector(2 downto 0));  -- Status
 end entity cd;
 
  architecture rtl of cd is
 
-  signal dsor_aligned   : std_logic_vector(n-1 downto 0);
   signal dsor_r, dndo_r : std_logic_vector(n downto 0);
   signal coc_r          : std_logic_vector(n-1 downto 0);
   signal shift          : unsigned(n-1 downto 0);
@@ -51,12 +50,13 @@ end entity cd;
   signal dndo_ld        : std_logic;
   signal coc_ld         : std_logic;
   signal coc_sh         : std_logic;
-  signal alig_ld        : std_logic;
+  signal dsor_sh_left   : std_logic;
   signal mux            : std_logic;
 
   -- Status signals
   signal zero     : std_logic;
   signal dndo_msb : std_logic;
+  signal aligned  : std_logic;
 begin
  -----------------------------------------------------------------------------
   -- Internamente no trabajo con las componentes del vector ctrl y status sino que
@@ -78,34 +78,10 @@ begin
    coc_ld,
    coc_sh,
    mux,
-	alig_ld) <= ctrl;
+	dsor_sh_left) <= ctrl;
 
-  status <= (dndo_msb &
+  status <= (aligned & dndo_msb &
              zero);
-
-  -----------------------------------------------------------------------------
-  -- Alineador
-  -----------------------------------------------------------------------------
-  p_aligner : process (dsor) is
-  begin
---  if rst_n = '0' then
---		  dsor_aligned <= (others => '0');
---	     elsif rising_edge(clk) then
---	        if alig_ld = '1' then
---  	  end if;
---  end if;
-   if dsor (2 downto 1) = "00" then
-     dsor_aligned <= dsor(0) & "00000";
-	  shift <= "000010";
-	elsif dsor (2 downto 2) = "0" then
-     dsor_aligned <= dsor(1 downto 0) & "0000";
-	  shift <= "000001";
-	else
-	  dsor_aligned <= dsor & "000";
-	  shift <= "000000";
-	end if;
-
-  end process p_aligner;
 
   -----------------------------------------------------------------------------
   -- Registro desplazamiento a derecha
@@ -116,13 +92,18 @@ begin
       dsor_r <= (others => '0');
     elsif rising_edge(clk) then
       if dsor_ld = '1' then
-        dsor_r <= '0' & dsor_aligned;
+        dsor_r <= '0' & dsor;
+		  shift <= (others => '0');
       elsif dsor_sh = '1' then
         dsor_r <= '0' & dsor_r(n downto 1);
+		elsif dsor_sh_left = '1' then
+		  dsor_r <= dsor_r(n-1 downto 0) & '0';
+		  shift <= shift + 1;
       end if;
     end if;
   end process p_dsor_r;
 
+  p_dsor_aligned : aligned <= dsor_r(n-2);
   -----------------------------------------------------------------------------
   -- Registro con carga paralelo
   -----------------------------------------------------------------------------
@@ -150,7 +131,7 @@ begin
       -- Completar
 		if coc_ld = '1' then
 			coc_r <= (others => '0');
-		elsif coc_sh = '0' and dndo_msb = '1' then
+		elsif coc_sh = '1' and dndo_msb = '1' then
 			coc_r <= coc_r(n-2 downto 0) & '0';
 		elsif coc_sh = '1' and dndo_msb = '0' then
 			coc_r <= coc_r(n-2 downto 0) & '1';
@@ -196,7 +177,7 @@ begin
   -----------------------------------------------------------------------------
   p_cmp : process (cntr_d1) is
   begin
-    if cntr_d1 = "000" then
+    if cntr_d1 = 0 then
       zero <= '1';
     else
       zero <= '0';

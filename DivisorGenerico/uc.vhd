@@ -26,13 +26,13 @@ entity uc is
     ini    : in  std_logic;                      -- External control signal
     fin    : out std_logic;                      -- External control signal
     ctrl   : out std_logic_vector(10 downto 0);   -- Control vector
-    status : in  std_logic_vector(1 downto 0));  -- Status vector
+    status : in  std_logic_vector(2 downto 0));  -- Status vector
 end entity uc;
 
 architecture rtl of uc is
-  type t_st is (s0, s1, s2, s3, s4, s5, s6);
+  type t_st is (s0, s0a, s0b, s1, s2, s3, s4, s5, s6);
   signal current_state, next_state : t_st;
-  signal zero, msb                 : std_logic;
+  signal zero, msb , aligned                 : std_logic;
 begin
 
   -----------------------------------------------------------------------------
@@ -42,20 +42,34 @@ begin
   -- la componente status(0) la asigno a la senal zero y la componente
   -- status(1) la asigna la senal msb.
   -----------------------------------------------------------------------------
-  p_status_signals : (msb, zero) <= status;
+  p_status_signals : (aligned, msb, zero) <= status;
 
   -----------------------------------------------------------------------------
   -- Proceso estado siguiente.
   -----------------------------------------------------------------------------
-  p_next_state : process (current_state, ini, msb, zero) is
+  p_next_state : process (current_state, ini, msb, aligned, zero) is
   begin  -- process p_next_state
     case current_state is
       when s0 =>
         if ini = '1' then
-          next_state <= s1;
+          next_state <= s0a;
         else
           next_state <= s0;
         end if;
+		  ---------------
+		when s0a =>
+		  if aligned = '1' then
+		     next_state <= s1;
+		  else
+		     next_state <= s0b;
+		  end if;
+		when s0b =>
+		  if aligned = '1' then
+		     next_state <= s1;
+		  else
+		     next_state <= s0b;
+		  end if;
+		  -----------------
       when s1 =>
       -- Completar
 			next_state <= s2;
@@ -92,17 +106,17 @@ begin
     -- coc_sh -------------------------------------------------------¡¡
     -- coc_ld ------------------------------------------------------¡¡¡
     -- dndo_ld ----------------------------------------------------vvvv
-	 constant c_alig_ld    : std_logic_vector(10 downto 0) := "00000000001";
-    constant c_mux        : std_logic_vector(10 downto 0) := "00000000010";
-    constant c_coc_sh     : std_logic_vector(10 downto 0) := "00000000100";
-    constant c_coc_ld     : std_logic_vector(10 downto 0) := "00000001000";
-    constant c_dndo_ld    : std_logic_vector(10 downto 0) := "00000010000";
-    constant c_dsor_sh    : std_logic_vector(10 downto 0) := "00000100000";
-    constant c_dsor_ld    : std_logic_vector(10 downto 0) := "00001000000";
-    constant c_cntr_cu    : std_logic_vector(10 downto 0) := "00010000000";
-    constant c_cntr_ld    : std_logic_vector(10 downto 0) := "00100000000";
-    constant c_cntr_d1_ld : std_logic_vector(10 downto 0) := "01000000000";
-    constant c_add_sub    : std_logic_vector(10 downto 0) := "10000000000";
+	 constant c_dsor_sh_left : std_logic_vector(10 downto 0) := "00000000001";
+    constant c_mux          : std_logic_vector(10 downto 0) := "00000000010";
+    constant c_coc_sh       : std_logic_vector(10 downto 0) := "00000000100";
+    constant c_coc_ld       : std_logic_vector(10 downto 0) := "00000001000";
+    constant c_dndo_ld      : std_logic_vector(10 downto 0) := "00000010000";
+    constant c_dsor_sh      : std_logic_vector(10 downto 0) := "00000100000";
+    constant c_dsor_ld      : std_logic_vector(10 downto 0) := "00001000000";
+    constant c_cntr_cu      : std_logic_vector(10 downto 0) := "00010000000";
+    constant c_cntr_ld      : std_logic_vector(10 downto 0) := "00100000000";
+    constant c_cntr_d1_ld   : std_logic_vector(10 downto 0) := "01000000000";
+    constant c_add_sub      : std_logic_vector(10 downto 0) := "10000000000";
 
   begin
     ctrl <= (others => '0');
@@ -110,13 +124,18 @@ begin
       when s0 =>
         ctrl <= (others => '0');
         fin  <= '1';
+		when s0a =>
+		  ctrl <= c_dsor_ld;
+		  fin <= '0';
+		when s0b =>
+		  ctrl <= c_dsor_sh_left;
+		  fin <= '0';
       when s1 =>
         -----------------------------------------------------------------------
         -- Se hace la OR logica de todas las constantes asociadas a las senales
         -- de control que se deben activar en el estado S1.
         -----------------------------------------------------------------------
         ctrl <= c_dndo_ld or
-                c_dsor_ld or
                 c_coc_ld or
                 c_cntr_ld;
         fin <= '0';

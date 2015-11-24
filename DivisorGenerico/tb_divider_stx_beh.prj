@@ -1,0 +1,4 @@
+vhdl isim_temp "uc.vhd"
+vhdl isim_temp "cd.vhd"
+vhdl isim_temp "divider.vhd"
+vhdl isim_temp "test_div.vhd"

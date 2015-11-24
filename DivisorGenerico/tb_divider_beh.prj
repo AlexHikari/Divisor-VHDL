@@ -1,0 +1,4 @@
+vhdl work "uc.vhd"
+vhdl work "cd.vhd"
+vhdl work "divider.vhd"
+vhdl work "test_div.vhd"

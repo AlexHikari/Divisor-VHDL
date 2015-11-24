@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -o "C:/Users/Alex/Documents/GitHub/Divisor-VHDL/Divisor/tb_divider_isim_beh.exe" -prj "C:/Users/Alex/Documents/GitHub/Divisor-VHDL/Divisor/tb_divider_beh.prj" "work.tb_divider" 
+-intstyle "ise" -incremental -o "C:/hlocal/Divisor-VHDL-master/Divisor-VHDL-master/Divisor/tb_divider_isim_beh.exe" -prj "C:/hlocal/Divisor-VHDL-master/Divisor-VHDL-master/Divisor/tb_divider_beh.prj" "work.tb_divider" 

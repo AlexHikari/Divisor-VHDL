@@ -155,7 +155,7 @@ begin
       -- Completar
 		if coc_ld = '1' then
 			coc_r <= (others => '0');
-		elsif coc_sh = '0' and dndo_msb = '1' then
+		elsif coc_sh = '1' and dndo_msb = '1' then
 			coc_r <= coc_r(6 downto 0) & '0';
 		elsif coc_sh = '1' and dndo_msb = '0' then
 			coc_r <= coc_r(6 downto 0) & '1';

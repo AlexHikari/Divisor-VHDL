@@ -21,11 +21,11 @@ use ieee.numeric_std.all;
 
 
 entity divider is
-  generic(n: integer := 6; m: integer := 3);
+  generic(n: integer := 6);
   port (clk   : in  std_logic;
         rst_n : in  std_logic;
         ini   : in  std_logic;
-        dsor  : in  std_logic_vector(m-1 downto 0);  -- dividendo
+        dsor  : in  std_logic_vector(n-1 downto 0);  -- dividendo
         dndo  : in  std_logic_vector(n-1 downto 0);  -- divisor
         coc   : out std_logic_vector(n-1 downto 0);  -- cociente
         res   : out std_logic_vector(n-1 downto 0);  -- resto
@@ -39,12 +39,12 @@ architecture struct of divider is
     port (
     clk    : in  std_logic;                      -- clock
     rst_n  : in  std_logic;                      -- reset
-    dsor   : in  std_logic_vector(m-1 downto 0);   -- Divisor
+    dsor   : in  std_logic_vector(n-1 downto 0);   -- Divisor
     dndo   : in  std_logic_vector(n-1 downto 0);   -- Dividendo
     coc    : out std_logic_vector(n-1 downto 0);   -- Cociente
     res    : out std_logic_vector(n-1 downto 0);   -- Resto
     ctrl   : in  std_logic_vector(10 downto 0);   -- Control
-    status : out std_logic_vector(1 downto 0));  -- Status
+    status : out std_logic_vector(2 downto 0));  -- Status
   end component cd;
 
   component uc is
@@ -54,12 +54,12 @@ architecture struct of divider is
       ini    : in  std_logic;                      -- External control signal
       fin    : out std_logic;                      -- External control signal
       ctrl   : out std_logic_vector(10 downto 0);   -- Control vector
-      status : in  std_logic_vector(1 downto 0));  -- Status vector
+      status : in  std_logic_vector(2 downto 0));  -- Status vector
 
   end component uc;
 
   signal ctrl   : std_logic_vector(10 downto 0);  -- Control vector
-  signal status : std_logic_vector(1 downto 0);  --Status vector
+  signal status : std_logic_vector(2 downto 0);  --Status vector
 begin
 
   i_cd : cd port map (

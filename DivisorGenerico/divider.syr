@@ -1,16 +1,16 @@
-Release 14.7 - xst P.20131013 (nt)
-Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Release 14.1 - xst P.15xf (nt64)
+Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
 --> Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> Reading design: divider.prj
 
@@ -104,23 +104,21 @@ Slice Utilization Ratio Delta      : 5
 =========================================================================
 *                          HDL Compilation                              *
 =========================================================================
-Compiling vhdl file "C:/Users/Alex/Documents/GitHub/Divisor-VHDL/DivisorGenerico/cd.vhd" in Library work.
+Compiling vhdl file "C:/hlocal/Divisor-VHDL-master/Divisor-VHDL-master/DivisorGenerico/cd.vhd" in Library work.
 Entity <cd> compiled.
 Entity <cd> (Architecture <rtl>) compiled.
-Compiling vhdl file "C:/Users/Alex/Documents/GitHub/Divisor-VHDL/DivisorGenerico/uc.vhd" in Library work.
+Compiling vhdl file "C:/hlocal/Divisor-VHDL-master/Divisor-VHDL-master/DivisorGenerico/uc.vhd" in Library work.
 Architecture rtl of Entity uc is up to date.
-Compiling vhdl file "C:/Users/Alex/Documents/GitHub/Divisor-VHDL/DivisorGenerico/divider.vhd" in Library work.
+Compiling vhdl file "C:/hlocal/Divisor-VHDL-master/Divisor-VHDL-master/DivisorGenerico/divider.vhd" in Library work.
 Architecture struct of Entity divider is up to date.
 
 =========================================================================
 *                     Design Hierarchy Analysis                         *
 =========================================================================
 Analyzing hierarchy for entity <divider> in library <work> (architecture <struct>) with generics.
-	m = 3
 	n = 6
 
 Analyzing hierarchy for entity <cd> in library <work> (architecture <rtl>) with generics.
-	m = 3
 	n = 6
 
 Analyzing hierarchy for entity <uc> in library <work> (architecture <rtl>).
@@ -130,12 +128,10 @@ Analyzing hierarchy for entity <uc> in library <work> (architecture <rtl>).
 *                            HDL Analysis                               *
 =========================================================================
 Analyzing generic Entity <divider> in library <work> (Architecture <struct>).
-	m = 3
 	n = 6
 Entity <divider> analyzed. Unit <divider> generated.
 
 Analyzing generic Entity <cd> in library <work> (Architecture <rtl>).
-	m = 3
 	n = 6
 Entity <cd> analyzed. Unit <cd> generated.
 
@@ -150,24 +146,24 @@ Entity <uc> analyzed. Unit <uc> generated.
 Performing bidirectional port resolution...
 
 Synthesizing Unit <cd>.
-    Related source file is "C:/Users/Alex/Documents/GitHub/Divisor-VHDL/DivisorGenerico/cd.vhd".
-WARNING:Xst:646 - Signal <alig_ld> is assigned but never used. This unconnected signal will be trimmed during the optimization process.
+    Related source file is "C:/hlocal/Divisor-VHDL-master/Divisor-VHDL-master/DivisorGenerico/cd.vhd".
     Found 7-bit addsub for signal <add>.
     Found 6-bit down counter for signal <cntr>.
     Found 6-bit register for signal <cntr_d1>.
     Found 6-bit register for signal <coc_r>.
     Found 7-bit register for signal <dndo_r>.
     Found 7-bit register for signal <dsor_r>.
+    Found 6-bit up counter for signal <shift>.
     Summary:
-	inferred   1 Counter(s).
+	inferred   2 Counter(s).
 	inferred  26 D-type flip-flop(s).
 	inferred   1 Adder/Subtractor(s).
 Unit <cd> synthesized.
 
 
 Synthesizing Unit <uc>.
-    Related source file is "C:/Users/Alex/Documents/GitHub/Divisor-VHDL/DivisorGenerico/uc.vhd".
-INFO:Xst:2117 - HDL ADVISOR - Mux Selector <current_state> of Case statement line 109 was re-encoded using one-hot encoding. The case statement will be optimized (default statement optimization), but this optimization may lead to design initialization problems. To ensure the design works safely, you can:
+    Related source file is "C:/hlocal/Divisor-VHDL-master/Divisor-VHDL-master/DivisorGenerico/uc.vhd".
+INFO:Xst:2117 - HDL ADVISOR - Mux Selector <current_state> of Case statement line 123 was re-encoded using one-hot encoding. The case statement will be optimized (default statement optimization), but this optimization may lead to design initialization problems. To ensure the design works safely, you can:
    	- add an 'INIT' attribute on signal <current_state> (optimization is then done without any risk)
    	- use the attribute 'signal_encoding user' to avoid onehot optimization
    	- use the attribute 'safe_implementation yes' to force XST to perform a safe (but less efficient) optimization
@@ -176,12 +172,12 @@ INFO:Xst:2117 - HDL ADVISOR - Mux Selector <current_state> of Case statement lin
    	- add an 'INIT' attribute on signal <current_state> (optimization is then done without any risk)
    	- use the attribute 'signal_encoding user' to avoid onehot optimization
    	- use the attribute 'safe_implementation yes' to force XST to perform a safe (but less efficient) optimization
-    Found 7-bit register for signal <current_state>.
+    Found 9-bit register for signal <current_state>.
 Unit <uc> synthesized.
 
 
 Synthesizing Unit <divider>.
-    Related source file is "C:/Users/Alex/Documents/GitHub/Divisor-VHDL/DivisorGenerico/divider.vhd".
+    Related source file is "C:/hlocal/Divisor-VHDL-master/Divisor-VHDL-master/DivisorGenerico/divider.vhd".
 Unit <divider> synthesized.
 
 INFO:Xst:1767 - HDL ADVISOR - Resource sharing has identified that some arithmetic operations in this design can share the same physical resources for reduced device utilization. For improved clock frequency you may try to disable resource sharing.
@@ -192,11 +188,13 @@ HDL Synthesis Report
 Macro Statistics
 # Adders/Subtractors                                   : 1
  7-bit addsub                                          : 1
-# Counters                                             : 1
+# Counters                                             : 2
  6-bit down counter                                    : 1
+ 6-bit up counter                                      : 1
 # Registers                                            : 5
  6-bit register                                        : 2
- 7-bit register                                        : 3
+ 7-bit register                                        : 2
+ 9-bit register                                        : 1
 
 =========================================================================
 
@@ -204,8 +202,6 @@ Macro Statistics
 *                       Advanced HDL Synthesis                          *
 =========================================================================
 
-WARNING:Xst:1710 - FF/Latch <dsor_r_6> (without init value) has a constant value of 0 in block <i_cd>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:2404 -  FFs/Latches <dsor_r<6:6>> (without init value) have a constant value of 0 in block <cd>.
 
 =========================================================================
 Advanced HDL Synthesis Report
@@ -213,10 +209,11 @@ Advanced HDL Synthesis Report
 Macro Statistics
 # Adders/Subtractors                                   : 1
  7-bit addsub                                          : 1
-# Counters                                             : 1
+# Counters                                             : 2
  6-bit down counter                                    : 1
-# Registers                                            : 32
- Flip-Flops                                            : 32
+ 6-bit up counter                                      : 1
+# Registers                                            : 35
+ Flip-Flops                                            : 35
 
 =========================================================================
 
@@ -240,8 +237,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 38
- Flip-Flops                                            : 38
+# Registers                                            : 47
+ Flip-Flops                                            : 47
 
 =========================================================================
 
@@ -267,29 +264,31 @@ Optimization Goal                  : Speed
 Keep Hierarchy                     : No
 
 Design Statistics
-# IOs                              : 25
+# IOs                              : 28
 
 Cell Usage :
-# BELS                             : 64
+# BELS                             : 82
 #      INV                         : 2
-#      LUT2                        : 17
-#      LUT3                        : 12
-#      LUT3_D                      : 1
-#      LUT4                        : 15
+#      LUT2                        : 11
+#      LUT2_L                      : 2
+#      LUT3                        : 23
+#      LUT3_L                      : 7
+#      LUT4                        : 20
 #      LUT4_D                      : 1
-#      LUT4_L                      : 1
+#      LUT4_L                      : 2
 #      MUXCY                       : 6
-#      MUXF5                       : 2
+#      MUXF5                       : 1
 #      XORCY                       : 7
-# FlipFlops/Latches                : 38
-#      FDC                         : 6
-#      FDCE                        : 25
+# FlipFlops/Latches                : 47
+#      FDC                         : 8
+#      FDCE                        : 26
+#      FDE                         : 6
 #      FDP                         : 1
 #      FDPE                        : 6
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 24
-#      IBUF                        : 11
+# IO Buffers                       : 27
+#      IBUF                        : 14
 #      OBUF                        : 13
 =========================================================================
 
@@ -298,11 +297,11 @@ Device utilization summary:
 
 Selected Device : 3s1000ft256-5 
 
- Number of Slices:                       28  out of   7680     0%  
- Number of Slice Flip Flops:             38  out of  15360     0%  
- Number of 4 input LUTs:                 49  out of  15360     0%  
- Number of IOs:                          25
- Number of bonded IOBs:                  25  out of    173    14%  
+ Number of Slices:                       37  out of   7680     0%  
+ Number of Slice Flip Flops:             47  out of  15360     0%  
+ Number of 4 input LUTs:                 68  out of  15360     0%  
+ Number of IOs:                          28
+ Number of bonded IOBs:                  28  out of    173    16%  
  Number of GCLKs:                         1  out of      8    12%  
 
 ---------------------------
@@ -326,7 +325,7 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-clk                                | BUFGP                  | 38    |
+clk                                | BUFGP                  | 47    |
 -----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
@@ -334,7 +333,7 @@ Asynchronous Control Signals Information:
 ----------------------------------------------------+------------------------+-------+
 Control Signal                                      | Buffer(FF name)        | Load  |
 ----------------------------------------------------+------------------------+-------+
-i_cd/rst_n_inv(i_uc/current_state_Acst_inv1_INV_0:O)| NONE(i_cd/cntr_0)      | 38    |
+i_cd/rst_n_inv(i_uc/current_state_Acst_inv1_INV_0:O)| NONE(i_cd/cntr_0)      | 41    |
 ----------------------------------------------------+------------------------+-------+
 
 Timing Summary:
@@ -342,7 +341,7 @@ Timing Summary:
 Speed Grade: -5
 
    Minimum period: 5.532ns (Maximum Frequency: 180.760MHz)
-   Minimum input arrival time before clock: 2.762ns
+   Minimum input arrival time before clock: 3.611ns
    Maximum output required time after clock: 6.306ns
    Maximum combinational path delay: No path found
 
@@ -353,19 +352,19 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'clk'
   Clock period: 5.532ns (frequency: 180.760MHz)
-  Total number of paths / destination ports: 282 / 69
+  Total number of paths / destination ports: 359 / 85
 -------------------------------------------------------------------------
 Delay:               5.532ns (Levels of Logic = 9)
-  Source:            i_uc/current_state_4 (FF)
+  Source:            i_uc/current_state_6 (FF)
   Destination:       i_cd/dndo_r_6 (FF)
   Source Clock:      clk rising
   Destination Clock: clk rising
 
-  Data Path: i_uc/current_state_4 to i_cd/dndo_r_6
+  Data Path: i_uc/current_state_6 to i_cd/dndo_r_6
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDC:C->Q             19   0.626   1.233  i_uc/current_state_4 (i_uc/current_state_4)
+     FDC:C->Q             19   0.626   1.233  i_uc/current_state_6 (i_uc/current_state_6)
      INV:I->O              1   0.479   0.681  i_cd/add_mux00002_INV_0 (i_cd/add_mux0000)
      MUXCY:CI->O           1   0.056   0.000  i_cd/Maddsub_add_cy<0> (i_cd/Maddsub_add_cy<0>)
      MUXCY:CI->O           1   0.056   0.000  i_cd/Maddsub_add_cy<1> (i_cd/Maddsub_add_cy<1>)
@@ -382,24 +381,23 @@ Delay:               5.532ns (Levels of Logic = 9)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
-  Total number of paths / destination ports: 20 / 13
+  Total number of paths / destination ports: 20 / 20
 -------------------------------------------------------------------------
-Offset:              2.762ns (Levels of Logic = 3)
-  Source:            dsor<2> (PAD)
-  Destination:       i_cd/cntr_1 (FF)
+Offset:              3.611ns (Levels of Logic = 2)
+  Source:            rst_n (PAD)
+  Destination:       i_cd/shift_5 (FF)
   Destination Clock: clk rising
 
-  Data Path: dsor<2> to i_cd/cntr_1
+  Data Path: rst_n to i_cd/shift_5
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             5   0.715   1.078  dsor_2_IBUF (dsor_2_IBUF)
-     LUT3:I0->O            1   0.479   0.000  i_cd/dsor_r_mux0000<4>1 (i_cd/dsor_r_mux0000<4>1)
-     MUXF5:I1->O           1   0.314   0.000  i_cd/dsor_r_mux0000<4>_f5 (i_cd/dsor_r_mux0000<4>)
-     FDCE:D                    0.176          i_cd/dsor_r_4
+     IBUF:I->O             2   0.715   1.040  rst_n_IBUF (rst_n_IBUF)
+     LUT4:I0->O            6   0.479   0.853  i_cd/shift_and00001 (i_cd/shift_and0000)
+     FDE:CE                    0.524          i_cd/shift_0
     ----------------------------------------
-    Total                      2.762ns (1.684ns logic, 1.078ns route)
-                                       (61.0% logic, 39.0% route)
+    Total                      3.611ns (1.718ns logic, 1.893ns route)
+                                       (47.6% logic, 52.4% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
@@ -423,14 +421,14 @@ Offset:              6.306ns (Levels of Logic = 1)
 =========================================================================
 
 
-Total REAL time to Xst completion: 3.00 secs
-Total CPU time to Xst completion: 3.35 secs
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 3.24 secs
  
 --> 
 
-Total memory usage is 193992 kilobytes
+Total memory usage is 256204 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    3 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
 Number of infos    :    3 (   0 filtered)
 
